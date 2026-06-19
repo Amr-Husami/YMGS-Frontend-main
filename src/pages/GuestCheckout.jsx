@@ -25,20 +25,20 @@ const GuestCheckout = () => {
     phone: "",
     billingFirstName: "",
     billingLastName: "",
-    billingالبريد: "",
+    billingEmail: "",
     billingStreet: "",
     billingCity: "",
     billingState: "",
     billingZipcode: "",
     billingCountry: "",
-    billingالهاتف: "",
+    billingPhone: "",
     manualPaymentDetails: {
       paymentType: "",
       cardNumber: "",
       cardHolderName: "",
       expiryDate: "",
       cvv: "",
-      paypalالبريد: "",
+      paypalEmail: "",
       cryptoTransactionId: "User didn't enter transaction ID",
     },
   });
@@ -90,7 +90,7 @@ const GuestCheckout = () => {
           ...prev.manualPaymentDetails,
           paymentType: paymentType,
           cryptoType: paymentType === "crypto" ? selectedCrypto : "",
-          cryptoالشبكة: paymentType === "crypto" ? selectedNetwork : ""
+          cryptoNetwork: paymentType === "crypto" ? selectedNetwork : ""
         },
       }));
     }
@@ -111,13 +111,13 @@ const GuestCheckout = () => {
         ...prev,
         billingFirstName: prev.firstName,
         billingLastName: prev.lastName,
-        billingالبريد: prev.email,
+        billingEmail: prev.email,
         billingStreet: prev.street,
         billingCity: prev.city,
         billingState: prev.state,
         billingZipcode: prev.zipcode,
         billingCountry: prev.country,
-        billingالهاتف: prev.phone
+        billingPhone: prev.phone
       }));
     }
   };
@@ -167,7 +167,7 @@ const GuestCheckout = () => {
       manualPaymentDetails: {
         ...prev.manualPaymentDetails,
         cryptoType: cryptoType,
-        cryptoالشبكة: ""
+        cryptoNetwork: ""
       }
     }));
   };
@@ -188,7 +188,7 @@ const GuestCheckout = () => {
       ...prev,
       manualPaymentDetails: {
         ...prev.manualPaymentDetails,
-        cryptoالشبكة: network
+        cryptoNetwork: network
       }
     }));
   };
@@ -299,11 +299,11 @@ const GuestCheckout = () => {
         originalAmount: subtotal + delivery_fee,
         isGuest: true,
         notes: notes,
-        couponالرمز: couponDiscount > 0 ? couponCode : undefined,
+        couponCode: couponDiscount > 0 ? couponCode : undefined,
         manualPaymentDetails: method === "manual" ? {
           ...formData.manualPaymentDetails,
           cryptoType: selectedCrypto,
-          cryptoالشبكة: selectedNetwork
+          cryptoNetwork: selectedNetwork
         } : undefined
       };
 
@@ -604,321 +604,78 @@ const GuestCheckout = () => {
           <Title text1={"طريقة"} text2={"الدفع"} />
           
           <div className="flex gap-3 flex-col mt-4">
-            <div
-              onClick={() => handleMethodChange("manual", "paypal")}
-              className="flex items-center gap-3 border dark:border-gray-600 p-2 px-3 cursor-pointer hover:border-green-500 dark:hover:border-green-500 transition-colors dark:bg-gray-700"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border dark:border-gray-500 rounded-full ${
-                  method === "manual" &&
-                  formData.manualPaymentDetails.paymentType === "paypal"
-                    ? "bg-green-500"
-                    : ""
-                }`}
-              ></p>
-              <p className="dark:text-gray-200">باي بال</p>
-            </div>
-
-            <div
-              onClick={() => handleMethodChange("manual", "credit_card")}
-              className="flex items-center gap-3 border dark:border-gray-600 p-2 px-3 cursor-pointer hover:border-green-500 dark:hover:border-green-500 transition-colors dark:bg-gray-700"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border dark:border-gray-500 rounded-full ${
-                  method === "manual" &&
-                  ["credit_card", "debit_card"].includes(
-                    formData.manualPaymentDetails.paymentType
-                  )
-                    ? "bg-green-500"
-                    : ""
-                }`}
-              ></p>
-              <p className="dark:text-gray-200">بطاقة ائتمان/خصم</p>
-            </div>
-
-            <div
-              onClick={() => handleMethodChange("manual", "crypto")}
-              className="flex items-center gap-3 border dark:border-gray-600 p-2 px-3 cursor-pointer hover:border-green-500 dark:hover:border-green-500 transition-colors dark:bg-gray-700"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border dark:border-gray-500 rounded-full ${
-                  method === "manual" &&
-                  formData.manualPaymentDetails.paymentType === "crypto"
-                    ? "bg-green-500"
-                    : ""
-                }`}
-              ></p>
-              <p className="dark:text-gray-200">عملات رقمية</p>
-            </div>
-
-            <div 
-            onClick={() => handleMethodChange("manual", "western_union")}
-            className="flex items-center gap-3 border dark:border-gray-600 p-2 px-3 cursor-pointer hover:border-green-500 dark:hover:border-green-500 transition-colors dark:bg-gray-700">
-            <p
-                className={`min-w-3.5 h-3.5 border dark:border-gray-500 rounded-full ${
-                  method === "manual" &&
-                  formData.manualPaymentDetails.paymentType === "western_union"
-                    ? "bg-green-500"
-                    : ""
-                }`}
-              ></p>
-              <p className="dark:text-gray-200">ويسترن يونيون</p>
-              <img
-                className="h-5 mx-4"
-                src={assets.western_union}
-                alt="Western Union"
-              />
-            </div>
+            {[
+              { id: "sham_cash", label: "شام كاش" },
+              { id: "syriatel_cash", label: "سيرياتيل كاش" },
+              { id: "mtn_cash", label: "MTN كاش" },
+            ].map((m) => (
+              <div
+                key={m.id}
+                onClick={() => handleMethodChange("manual", m.id)}
+                className="flex items-center gap-3 border dark:border-gray-600 p-3 px-3 cursor-pointer hover:border-green-500 dark:hover:border-green-500 transition-colors dark:bg-gray-700"
+              >
+                <p
+                  className={`min-w-3.5 h-3.5 border dark:border-gray-500 rounded-full ${
+                    method === "manual" &&
+                    formData.manualPaymentDetails.paymentType === m.id
+                      ? "bg-green-500"
+                      : ""
+                  }`}
+                ></p>
+                <p className="dark:text-gray-200">{m.label}</p>
+              </div>
+            ))}
           </div>
 
-          {method === "manual" && formData.manualPaymentDetails.paymentType !== "western_union" && (
-            <div className="mt-6 border dark:border-gray-600 p-4 rounded dark:bg-gray-700">
-              <h3 className="text-lg font-medium mb-4 dark:text-gray-200">
-                تفاصيل الدفع
-              </h3>
-
-              {formData.manualPaymentDetails?.paymentType === "paypal" && (
-                <div>
-                  <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                    بريد باي بال الإلكتروني
-                  </label>
-                  <input
-                    type="email"
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        manualPaymentDetails: {
-                          ...prev.manualPaymentDetails,
-                          paypalالبريد: e.target.value,
-                        },
-                      }))
-                    }
-                    className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                    placeholder="بريد باي بال الإلكتروني"
-                  />
-                </div>
-              )}
-
-              {formData.manualPaymentDetails?.paymentType &&
-                ["credit_card", "debit_card"].includes(
-                  formData.manualPaymentDetails.paymentType
-                ) && (
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        نوع الدفع
-                      </label>
-                      <select
-                        required
-                        onChange={(e) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            manualPaymentDetails: {
-                              ...prev.manualPaymentDetails,
-                              paymentType: e.target.value,
-                            },
-                          }))
-                        }
-                        className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                      >
-                        <option value="">اختر طريقة الدفع</option>
-                        <option value="credit_card">بطاقة ائتمان</option>
-                        <option value="debit_card">بطاقة خصم</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        رقم البطاقة
-                      </label>
-                      <input
-                        type="text"
-                        onChange={(e) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            manualPaymentDetails: {
-                              ...prev.manualPaymentDetails,
-                              cardNumber: e.target.value,
-                            },
-                          }))
-                        }
-                        className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                        placeholder="رقم البطاقة"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        اسم حامل البطاقة
-                      </label>
-                      <input
-                        type="text"
-                        onChange={(e) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            manualPaymentDetails: {
-                              ...prev.manualPaymentDetails,
-                              cardHolderName: e.target.value,
-                            },
-                          }))
-                        }
-                        className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                        placeholder="اسم حامل البطاقة"
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                          تاريخ الانتهاء
-                        </label>
-                        <input
-                          type="text"
-                          onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              manualPaymentDetails: {
-                                ...prev.manualPaymentDetails,
-                                expiryDate: e.target.value,
-                              },
-                            }))
-                          }
-                          className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                          placeholder="MM/YY"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                          CVV
-                        </label>
-                        <input
-                          type="text"
-                          onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              manualPaymentDetails: {
-                                ...prev.manualPaymentDetails,
-                                cvv: e.target.value,
-                              },
-                            }))
-                          }
-                          className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                          placeholder="رمز التحقق"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-              {formData.manualPaymentDetails?.paymentType === "crypto" && (
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                      اختر العملة الرقمية
-                    </label>
-                    <select
-                      value={selectedCrypto}
-                      onChange={(e) => handleCryptoChange(e.target.value)}
-                      className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                    >
-                      <option value="">اختر عملة رقمية</option>
-                      {[...new Set(availableCryptos.map(wallet => wallet.cryptoType))].map(crypto => (
-                        <option key={crypto} value={crypto}>
-                          {crypto}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  {selectedCrypto && (
-                    <div>
-                      <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        اختر الشبكة
-                      </label>
-                      <select
-                        value={selectedNetwork}
-                        onChange={(e) => handleNetworkChange(e.target.value)}
-                        className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                      >
-                        <option value="">اختر الشبكة</option>
-                        {availableCryptos
-                          .filter(wallet => wallet.cryptoType === selectedCrypto)
-                          .map(wallet => (
-                            <option key={wallet.network} value={wallet.network}>
-                              {wallet.network}
-                            </option>
-                          ))
-                        }
-                      </select>
-                    </div>
-                  )}
-                  
-                  {selectedWallet && (
-                  <div>
-                    <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                      أرسل الدفعة إلى عنوان المحفظة هذا:
-                    </label>
-                    <div className="flex items-center">
-                      <input
-                        type="text"
-                          value={selectedWallet.walletAddress}
-                        readOnly
-                        className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                      />
-                      <button
-                        type="button"
-                          onClick={() => copyWalletAddress(selectedWallet.walletAddress)}
-                        className="bg-gray-200 dark:bg-gray-600 px-4 py-2 ml-2 rounded"
-                      >
-                        نسخ
-                      </button>
-                    </div>
-                      
-                      <div className="mt-4 flex justify-center">
-                        <img 
-                          src={selectedWallet.qrCodeImage} 
-                          alt={`${selectedCrypto} ${selectedNetwork} QR Code`} 
-                          className="w-48 h-48 object-contain border dark:border-gray-600 p-2"
-                        />
-                      </div>
-                      
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                        بعد إرسال الدفعة، يمكنك إدخال رقم المعاملة أدناه (اختياري)
-                    </p>
-                  </div>
-                  )}
-                  
-                  <div>
-                    <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                      رقم المعاملة (اختياري)
-                    </label>
-                    <input
-                      type="text"
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          manualPaymentDetails: {
-                            ...prev.manualPaymentDetails,
-                            cryptoTransactionId: e.target.value,
-                          },
-                        }))
-                      }
-                      className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                      placeholder="أدخل رقم المعاملة (اختياري)"
-                    />
-                  </div>
-                </div>
-              )}
-
+          {method === "manual" && formData.manualPaymentDetails.paymentType && (
+            <div className="mt-6 border dark:border-gray-600 p-4 rounded dark:bg-gray-700 space-y-4">
+              <h3 className="text-lg font-medium dark:text-gray-200">تفاصيل الدفع</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                أرسل قيمة الطلب عبر{" "}
+                <span className="font-semibold">
+                  {({ sham_cash: "شام كاش", syriatel_cash: "سيرياتيل كاش", mtn_cash: "MTN كاش" })[formData.manualPaymentDetails.paymentType]}
+                </span>{" "}
+                إلى الرقم التالي:
+              </p>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value="+963953276347"
+                  className="flex-1 border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white font-mono text-center"
+                />
+                <button
+                  type="button"
+                  onClick={() => copyWalletAddress("+963953276347")}
+                  className="bg-gray-200 dark:bg-gray-600 px-4 py-2 rounded whitespace-nowrap"
+                >
+                  نسخ
+                </button>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 dark:text-gray-300">
+                  رقم عملية التحويل (اختياري)
+                </label>
+                <input
+                  type="text"
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      manualPaymentDetails: {
+                        ...prev.manualPaymentDetails,
+                        transactionRef: e.target.value,
+                      },
+                    }))
+                  }
+                  className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
+                  placeholder="أدخل رقم عملية التحويل بعد الدفع (اختياري)"
+                />
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                بعد إرسال المبلغ اضغط «تأكيد الطلب»، وسيتواصل معك فريقنا لتأكيد الدفع.
+              </p>
             </div>
           )}
-
-          <div className="text-center my-4">
-            <button
-              type="button"
-              onClick={() => navigate('/login')}
-              className="text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              لديك حساب بالفعل؟ سجّل الدخول
-            </button>
-          </div>
 
           <div className="w-full text-end mt-8">
             <button

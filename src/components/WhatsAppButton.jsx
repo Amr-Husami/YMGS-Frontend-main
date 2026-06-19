@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const WhatsAppButton = () => {
   const [contactInfo, setContactInfo] = useState({
-    footerالبريد: 'info@souqalsham.com',
-    footerالهاتف: '963110000000'
+    footerEmail: 'info@shifa.sy',
+    footerPhone: '+963953276347'
   });
   const handleClick = () => {
     // remove the + and empty space

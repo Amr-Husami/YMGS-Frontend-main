@@ -15,8 +15,8 @@ const Contact = () => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [contactInfo, setContactInfo] = useState({
-    contactالبريد: 'info@souqalsham.com',
-    contactالهاتف: '+963 11 000 0000',
+    contactEmail: 'info@souqalsham.com',
+    contactPhone: '+963 11 000 0000',
     contactAddress: 'دمشق، الجمهورية العربية السورية',
     businessHours: 'السبت - الخميس: 9:00 صباحاً - 9:00 مساءً\nالجمعة: 2:00 مساءً - 9:00 مساءً'
   })

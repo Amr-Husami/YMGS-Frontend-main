@@ -29,7 +29,7 @@ const Cart = () => {
           tempData.push({
             _id: itemId,
             quantity: typeof itemData === 'object' ? itemData.quantity : itemData,
-            selectedالسعر: typeof itemData === 'object' ? itemData.selectedPrice : null,
+            selectedPrice: typeof itemData === 'object' ? itemData.selectedPrice : null,
             isPackage: typeof itemData === 'object' ? itemData.isPackage : false
           });
         }
@@ -100,7 +100,7 @@ const Cart = () => {
                       if (value !== '' && value !== '0') {
                         const newItemData = {
                           quantity: Number(value),
-                          selectedالسعر: item.selectedPrice,
+                          selectedPrice: item.selectedPrice,
                           isPackage: item.isPackage
                         };
                         updateQuantity(item._id, newItemData);

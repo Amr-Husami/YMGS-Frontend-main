@@ -261,7 +261,7 @@ const Product = () => {
             onClick={() => {
               const cartItem = {
                 quantity: quantity,
-                selectedالسعر: selectedQuantityPrice
+                selectedPrice: selectedQuantityPrice
                   ? selectedQuantityPrice.price
                   : productData.price,
                 isPackage: !!selectedQuantityPrice,
@@ -294,7 +294,7 @@ const Product = () => {
             onClick={() => {
               const cartItem = {
                 quantity: quantity,
-                selectedالسعر: selectedQuantityPrice
+                selectedPrice: selectedQuantityPrice
                   ? selectedQuantityPrice.price
                   : productData.price,
                 isPackage: !!selectedQuantityPrice,
