@@ -16,7 +16,7 @@ const Cart = () => {
     if(token){
       navigate('/place-order');
     }else{
-      toast.info('Continuing as guest checkout');
+      toast.info('المتابعة كزائر دون حساب');
       navigate('/guest-checkout');
     }
   }
@@ -29,7 +29,7 @@ const Cart = () => {
           tempData.push({
             _id: itemId,
             quantity: typeof itemData === 'object' ? itemData.quantity : itemData,
-            selectedPrice: typeof itemData === 'object' ? itemData.selectedPrice : null,
+            selectedالسعر: typeof itemData === 'object' ? itemData.selectedPrice : null,
             isPackage: typeof itemData === 'object' ? itemData.isPackage : false
           });
         }
@@ -45,13 +45,13 @@ const Cart = () => {
   // Empty cart component
   const EmptyCart = () => (
     <div className='flex flex-col items-center justify-center py-20 dark:text-gray-200'>
-      <h2 className='text-2xl font-medium text-gray-600 dark:text-gray-300 mb-4'>Your Cart is Empty</h2>
-      <p className='text-gray-500 dark:text-gray-400 mb-8'>Looks like you haven&apos;t added anything to your cart yet</p>
+      <h2 className='text-2xl font-medium text-gray-600 dark:text-gray-300 mb-4'>سلة التسوق فارغة</h2>
+      <p className='text-gray-500 dark:text-gray-400 mb-8'>يبدو أنك لم تُضِف أي منتجات إلى سلتك بعد</p>
       <button 
         onClick={() => navigate('/products')} 
         className='bg-black text-white px-8 py-3 text-sm hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600'
       >
-        SHOP NOW
+        تسوّق الآن
       </button>
     </div>
   );
@@ -59,7 +59,7 @@ const Cart = () => {
   return (
     <div className='border-t dark:border-gray-700 pt-14 dark:bg-gray-800'>
       <div className='text-2xl mb-3'>
-        <Title text1={'YOUR'} text2={'CART'}/>
+        <Title text1={'سلة'} text2={'التسوق'}/>
       </div>
       
       {cartData.length === 0 ? (
@@ -85,7 +85,7 @@ const Cart = () => {
                       <div className='flex items-center gap-5 mt-2'>
                         <p className='dark:text-gray-300'>{currency}{displayPrice}</p>
                         {item.isPackage && (
-                          <p className='text-xs text-green-600 dark:text-green-400'>Package Price</p>
+                          <p className='text-xs text-green-600 dark:text-green-400'>سعر العبوة</p>
                         )}
                         {!item.isPackage && minOrderQuantity > 1 && (
                           <p className='text-xs text-orange-600 dark:text-orange-400'>Min qty: {minOrderQuantity}</p>
@@ -100,7 +100,7 @@ const Cart = () => {
                       if (value !== '' && value !== '0') {
                         const newItemData = {
                           quantity: Number(value),
-                          selectedPrice: item.selectedPrice,
+                          selectedالسعر: item.selectedPrice,
                           isPackage: item.isPackage
                         };
                         updateQuantity(item._id, newItemData);
@@ -134,7 +134,7 @@ const Cart = () => {
                   onClick={proceedToPayment} 
                   className='bg-black text-white text-sm my-8 px-8 py-3 dark:bg-[#02ADEE] dark:text-gray-800 dark:hover:bg-yellow-500'
                 >
-                  PROCEED TO PAYMENT
+                  المتابعة للدفع
                 </button>
               </div>
             </div>

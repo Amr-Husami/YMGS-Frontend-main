@@ -32,7 +32,7 @@ const ThemeSwitcher = () => {
             className="flex items-center w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <Sun size={16} className="mr-2" />
-            <span>Light</span>
+            <span>فاتح</span>
             {theme === 'light' && <span className="ml-auto">✓</span>}
           </button>
           
@@ -41,7 +41,7 @@ const ThemeSwitcher = () => {
             className="flex items-center w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <Moon size={16} className="mr-2" />
-            <span>Dark</span>
+            <span>داكن</span>
             {theme === 'dark' && <span className="ml-auto">✓</span>}
           </button>
           
@@ -50,7 +50,7 @@ const ThemeSwitcher = () => {
             className="flex items-center w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <Monitor size={16} className="mr-2" />
-            <span>System</span>
+            <span>النظام</span>
             {theme === 'system' && <span className="ml-auto">✓</span>}
           </button>
         </div>

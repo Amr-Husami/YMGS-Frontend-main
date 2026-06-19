@@ -14,7 +14,9 @@ const Collection = () => {
     pagination,
     setPage,
     filters,
-    updateFilters
+    updateFilters,
+    categories,
+    subCategories
   } = useContext(ShopContext);
 
   const [showFilter, setShowFilter] = useState(false);
@@ -206,20 +208,17 @@ const Collection = () => {
         <div className={`border border-gray-300 dark:border-gray-700 pl-5 py-3 mt-6 ${showFilter ? '' : 'hidden'} sm:block dark:bg-gray-800`}>
           <p className='mb-3 text-sm font-medium dark:text-gray-200 text-right'>الفئات</p>
           <div className='flex flex-col gap-2 text-sm font-light text-gray-700 dark:text-gray-300 text-right'>
-            {[
-              { value: 'أدوية', label: 'أدوية' },
-              { value: 'فيتامينات ومكملات', label: 'فيتامينات ومكملات' },
-              { value: 'العناية الشخصية', label: 'العناية الشخصية' },
-              { value: 'أجهزة طبية', label: 'أجهزة طبية' },
-              { value: 'صحة وعافية', label: 'صحة وعافية' },
-            ].map(cat => (
-              <p key={cat.value} className='flex gap-2 justify-end'>
-                <label className="cursor-pointer">{cat.label}</label>
+            {categories.length === 0 && (
+              <p className="text-xs text-gray-400">لا توجد فئات</p>
+            )}
+            {categories.map(cat => (
+              <p key={cat} className='flex gap-2 justify-end'>
+                <label className="cursor-pointer">{cat}</label>
                 <input
                   className='w-3 accent-gray-700 dark:accent-yellow-400'
                   type='checkbox'
-                  value={cat.value}
-                  checked={categoryFilters.includes(cat.value)}
+                  value={cat}
+                  checked={categoryFilters.includes(cat)}
                   onChange={(e) => handleCategoryToggle(e.target.value)}
                 />
               </p>
@@ -231,23 +230,17 @@ const Collection = () => {
         <div className={`border border-gray-300 dark:border-gray-700 pl-5 py-3 mt-6 ${showFilter ? '' : 'hidden'} sm:block dark:bg-gray-800`}>
           <p className='mb-3 text-sm font-medium dark:text-gray-200 text-right'>النوع</p>
           <div className='flex flex-col gap-2 text-sm font-light text-gray-700 dark:text-gray-300 text-right'>
-            {[
-              { value: 'مسكنات الألم', label: 'مسكنات الألم' },
-              { value: 'فيتامينات', label: 'فيتامينات' },
-              { value: 'معادن', label: 'معادن' },
-              { value: 'أحماض دهنية', label: 'أحماض دهنية' },
-              { value: 'ملتيفيتامين', label: 'ملتيفيتامين' },
-              { value: 'هضم وأمعاء', label: 'هضم وأمعاء' },
-              { value: 'أدوية بوصفة', label: 'أدوية بوصفة طبية' },
-              { value: 'بدون وصفة', label: 'بدون وصفة طبية' },
-            ].map(sub => (
-              <p key={sub.value} className='flex gap-2 justify-end'>
-                <label className="cursor-pointer">{sub.label}</label>
+            {subCategories.length === 0 && (
+              <p className="text-xs text-gray-400">لا توجد أنواع</p>
+            )}
+            {subCategories.map(sub => (
+              <p key={sub} className='flex gap-2 justify-end'>
+                <label className="cursor-pointer">{sub}</label>
                 <input
                   className='w-3 accent-gray-700 dark:accent-yellow-400'
                   type='checkbox'
-                  value={sub.value}
-                  checked={subCategoryFilters.includes(sub.value)}
+                  value={sub}
+                  checked={subCategoryFilters.includes(sub)}
                   onChange={(e) => handleSubCategoryToggle(e.target.value)}
                 />
               </p>
@@ -284,7 +277,7 @@ const Collection = () => {
             ) : (
               <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
                 {products.map((item) => (
-                  <div key={item._id} className="flex flex-col items-center">
+                  <div key={item._id} className="w-full flex flex-col">
                     <ProductItem
                       id={item._id}
                       name={item.name}
@@ -294,7 +287,7 @@ const Collection = () => {
                     />
                     <Link
                       to={`/product/${item._id}`}
-                      className="mt-2 mx-auto bg-primary dark:bg-[#02ADEE] text-white dark:text-gray-800 px-4 py-1.5 rounded-full text-xs font-medium flex items-center gap-1 hover:bg-primary/90 dark:hover:bg-yellow-500 transition-colors"
+                      className="mt-2 w-full bg-[#02ADEE] text-white px-4 py-2 rounded-full text-xs font-medium flex items-center justify-center gap-1 hover:bg-[#0299d1] transition-colors"
                     >
                       <ShoppingCart size={14} />
                       اشتر الآن

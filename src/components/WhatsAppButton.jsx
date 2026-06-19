@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const WhatsAppButton = () => {
   const [contactInfo, setContactInfo] = useState({
-    footerEmail: 'info@souqalsham.com',
-    footerPhone: '963110000000'
+    footerالبريد: 'info@souqalsham.com',
+    footerالهاتف: '963110000000'
   });
   const handleClick = () => {
     // remove the + and empty space
@@ -39,7 +39,7 @@ const WhatsAppButton = () => {
         </svg>
       </div>
 
-      <div className="text">Whatsapp</div>
+      <div className="text">واتساب</div>
 
       <style>{`
         .Btn {

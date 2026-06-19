@@ -31,6 +31,10 @@ const ShopContextProvider = (props) => {
         sortBy: 'date',
         sortOrder: 'desc'
     });
+    // Category / type options, loaded from the backend so the filter UI always
+    // matches the products that actually exist.
+    const [categories, setCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState([]);
     const [token, setToken] = useState('');
     const navigate = useNavigate();
 
@@ -103,7 +107,9 @@ const ShopContextProvider = (props) => {
                 search: currentFilters.search || search
             });
 
-            if (response.data.success && response.data.products.length > 0) {
+            if (response.data.success) {
+                // Trust the backend result — even an empty list means "no matches",
+                // not "fall back to demo products".
                 setProducts(response.data.products);
                 setProductsPagination({
                     total: response.data.pagination.total,
@@ -112,16 +118,12 @@ const ShopContextProvider = (props) => {
                     limit: response.data.pagination.limit
                 });
             } else {
-                const filtered = filterStaticProducts(currentFilters);
-                setProducts(filtered);
-                setProductsPagination({
-                    total: filtered.length,
-                    pages: 1,
-                    currentPage: 1,
-                    limit: 20
-                });
+                setProducts([]);
+                setProductsPagination(prev => ({ ...prev, total: 0, pages: 0, currentPage: 1 }));
             }
         } catch (error) {
+            // Network/server error only — fall back to the bundled catalogue so the
+            // page isn't blank when the backend is unreachable.
             console.error("Error fetching products:", error);
             const filtered = filterStaticProducts(currentFilters);
             setProducts(filtered);
@@ -390,7 +392,7 @@ const ShopContextProvider = (props) => {
                     search: filters.search || search
                 });
 
-                if (response.data.success && response.data.products.length > 0) {
+                if (response.data.success) {
                     setProducts(response.data.products);
                     setProductsPagination({
                         total: response.data.pagination.total,
@@ -399,7 +401,8 @@ const ShopContextProvider = (props) => {
                         limit: response.data.pagination.limit
                     });
                 } else {
-                    setProducts(syrianProducts);
+                    setProducts([]);
+                    setProductsPagination(prev => ({ ...prev, total: 0, pages: 0, currentPage: 1 }));
                 }
             } catch {
                 setProducts(syrianProducts);
@@ -530,8 +533,27 @@ const ShopContextProvider = (props) => {
         return items;
     }
 
+    const fetchFilterOptions = async () => {
+        if (!backendUrl) {
+            // Derive options from the bundled catalogue when offline.
+            setCategories([...new Set(syrianProducts.map(p => p.category).filter(Boolean))].sort());
+            setSubCategories([...new Set(syrianProducts.map(p => p.subCategory).filter(Boolean))].sort());
+            return;
+        }
+        try {
+            const { data } = await axios.get(backendUrl + '/api/product/filters');
+            if (data.success) {
+                setCategories(data.categories || []);
+                setSubCategories(data.subCategories || []);
+            }
+        } catch (error) {
+            console.error('Error fetching filter options:', error);
+        }
+    };
+
     useEffect(() => {
         getProductsData(true);
+        fetchFilterOptions();
     }, []);
 
     useEffect(() => {
@@ -562,6 +584,7 @@ const ShopContextProvider = (props) => {
         getCartAmount, navigate, backendUrl,
         setToken, token, getCartItems, getItemTotal,
         filters, updateFilters,
+        categories, subCategories,
         pagination: productsPagination,
         setPage,
         getProductById,

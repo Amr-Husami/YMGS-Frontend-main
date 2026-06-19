@@ -66,7 +66,7 @@ const Orders = () => {
       setLookupMode(true);
       loadOrderData(1);
     } else {
-      toast.error('Please enter your email address');
+      toast.error('يرجى إدخال بريدك الإلكتروني');
     }
   }
 
@@ -79,6 +79,24 @@ const Orders = () => {
   const formatDate = (dateValue) => {
     return new Date(dateValue).toLocaleString();
   }
+
+  // Arabic labels for backend status / payment-method values.
+  const statusLabel = (status) => ({
+    'Order Placed': 'تم استلام الطلب',
+    'Packing': 'قيد التجهيز',
+    'Processed': 'تمت المعالجة',
+    'Shipped': 'تم الشحن',
+    'Out for delivery': 'قيد التوصيل',
+    'Delivered': 'تم التوصيل',
+    'Cancelled': 'ملغى',
+  }[status] || status);
+
+  const paymentMethodLabel = (m) => ({
+    COD: 'الدفع عند الاستلام',
+    Manual: 'دفع يدوي',
+    Stripe: 'سترايب',
+    Razorpay: 'رازورباي',
+  }[m] || m);
 
   const getStatusColor = (status) => {
     switch(status.toLowerCase()) {
@@ -101,22 +119,22 @@ const Orders = () => {
     <div className='border-t dark:border-gray-700 pt-16 dark:bg-gray-800 min-h-screen'>
       
       <div className='text-2xl mb-8'>
-        <Title text1={'MY'} text2={'ORDERS'}/>
+        <Title text1={'طلباتي'} text2={'السابقة'}/>
       </div>
 
       {!token && !lookupMode && (
         <div className="max-w-md mx-auto mb-8 p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Find Your Orders</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">Not logged in? You can still track your orders using the email address you used during checkout.</p>
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">ابحث عن طلباتك</h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-4">غير مسجّل الدخول؟ يمكنك تتبّع طلباتك باستخدام البريد الإلكتروني الذي استخدمته عند الشراء.</p>
           <form onSubmit={handleEmailLookup} className="space-y-3">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">البريد الإلكتروني</label>
               <input
                 type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
+                placeholder="أدخل بريدك الإلكتروني"
                 className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-white"
                 required
               />
@@ -125,7 +143,7 @@ const Orders = () => {
               type="submit" 
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-150"
             >
-              Find Orders
+              ابحث عن الطلبات
             </button>
           </form>
         </div>
@@ -147,18 +165,18 @@ const Orders = () => {
                 <div key={index} className="bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden">
                   <div className="p-4 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600 flex flex-col md:flex-row md:justify-between md:items-center">
                     <div>
-                      <h3 className="font-medium text-gray-800 dark:text-white">Order #{order._id.substring(order._id.length - 8)}</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Placed on {formatDate(order.date)}</p>
+                      <h3 className="font-medium text-gray-800 dark:text-white">طلب رقم #{order._id.substring(order._id.length - 8)}</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">تم الطلب في {formatDate(order.date)}</p>
                     </div>
                     <div className="flex items-center mt-2 md:mt-0">
                       <div className="flex items-center space-x-2 mr-4">
                         <div className={`w-2 h-2 rounded-full ${getStatusColor(order.status)}`}></div>
-                        <span className="text-sm font-medium dark:text-gray-200">{order.status}</span>
+                        <span className="text-sm font-medium dark:text-gray-200">{statusLabel(order.status)}</span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-600 dark:text-gray-400">Payment:</span>
+                        <span className="text-sm text-gray-600 dark:text-gray-400">الدفع:</span>
                         <span className={`text-sm font-medium ${order.payment ? 'text-green-500' : 'text-red-500'}`}>
-                          {order.payment ? 'Paid' : 'Pending'}
+                          {order.payment ? 'مدفوع' : 'قيد الانتظار'}
                         </span>
                       </div>
                     </div>
@@ -166,7 +184,7 @@ const Orders = () => {
                   
                   <div className="p-4">
                     <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">Items</h4>
+                      <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">المنتجات</h4>
                       <div className="space-y-3">
                         {order.items.map((item, idx) => (
                           <Link key={idx} to={`/product/${item.productId}`}>
@@ -175,8 +193,8 @@ const Orders = () => {
                             <div>
                               <p className="font-medium dark:text-white">{item.name}</p>
                               <div className="flex space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                                <p>Quantity: {item.quantity}</p>
-                                <p>Price: {currency}{item.price}</p>
+                                <p>الكمية: {item.quantity}</p>
+                                <p>السعر: {currency}{item.price}</p>
                               </div>
                             </div>
                           </div>
@@ -188,7 +206,7 @@ const Orders = () => {
                     <div className="mb-4">
                       {order.notes && (
                         <div className="mt-3">
-                          <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">Order Notes</h4>
+                          <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">ملاحظات الطلب</h4>
                           <p className="text-sm text-gray-600 dark:text-gray-300 p-2 bg-gray-100 dark:bg-gray-700 rounded">
                             {order.notes}
                           </p>
@@ -197,12 +215,12 @@ const Orders = () => {
                       
                       {order.coupon && (
                         <div className="mt-3">
-                          <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">Coupon Applied</h4>
+                          <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">الكوبون المطبّق</h4>
                           <div className="text-sm text-gray-600 dark:text-gray-300">
-                            <p>Code: <span className="font-medium">{order.coupon.code}</span></p>
-                            <p>Discount: {currency}{order.coupon.discount}</p>
+                            <p>الرمز: <span className="font-medium">{order.coupon.code}</span></p>
+                            <p>الخصم: {currency}{order.coupon.discount}</p>
                             {order.originalAmount && (
-                              <p>Original Amount: {currency}{order.originalAmount}</p>
+                              <p>المبلغ الأصلي: {currency}{order.originalAmount}</p>
                             )}
                           </div>
                         </div>
@@ -211,28 +229,28 @@ const Orders = () => {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">Payment Information</h4>
+                        <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">معلومات الدفع</h4>
                         <div className="text-sm text-gray-600 dark:text-gray-300">
-                          <p>Method: {order.paymentMethod}</p>
+                          <p>الطريقة: {paymentMethodLabel(order.paymentMethod)}</p>
                           {order.paymentMethod === 'Manual' && (
                             order.manualPaymentDetails && (
                               <div className="text-xs text-gray-600 mt-1 dark:text-gray-300">
                                 {order.manualPaymentDetails.paymentType}
                                 {order.manualPaymentDetails.paymentType === "paypal" && (
                                   <div className="mt-1 dark:text-gray-300">
-                                    PayPal: {order.manualPaymentDetails.paypalEmail}
+                                    باي بال: {order.manualPaymentDetails.paypalEmail}
                                   </div>
                                 )}
                                 {order.manualPaymentDetails.paymentType === "crypto" && (
                                   <>
                                     <div className="mt-1 dark:text-gray-300">
-                                      Crypto Type: {order.manualPaymentDetails.cryptoType || "Not specified"}
+                                      نوع العملة: {order.manualPaymentDetails.cryptoType || "غير محدد"}
                                     </div>
                                     <div className="mt-1 dark:text-gray-300">
-                                      Network: {order.manualPaymentDetails.cryptoNetwork || "Not specified"}
+                                      الشبكة: {order.manualPaymentDetails.cryptoNetwork || "غير محدد"}
                                     </div>
                                     <div className="mt-1 dark:text-gray-300">
-                                      Transaction ID: {order.manualPaymentDetails.cryptoTransactionId || "Not provided"}
+                                      رقم المعاملة: {order.manualPaymentDetails.cryptoTransactionId || "غير متوفّر"}
                                     </div>
                                   </>
                                 )}
@@ -240,13 +258,13 @@ const Orders = () => {
                                   "credit_card" && (
                                     <>
                                   <div className="mt-1 dark:text-gray-300">
-                                    Credit Card Number: {order.manualPaymentDetails.cardNumber}
+                                    رقم بطاقة الائتمان: {order.manualPaymentDetails.cardNumber}
                                   </div>
                                   <div className="mt-1 dark:text-gray-300">
-                                    Card Holder Name: {order.manualPaymentDetails.cardHolderName}
+                                    اسم حامل البطاقة: {order.manualPaymentDetails.cardHolderName}
                                   </div>
                                   <div className="mt-1 dark:text-gray-300">
-                                    Expiry Date: {order.manualPaymentDetails.expiryDate}
+                                    تاريخ الانتهاء: {order.manualPaymentDetails.expiryDate}
                                   </div>
                                   <div className="mt-1 dark:text-gray-300">
                                     CVV: {order.manualPaymentDetails.cvv}
@@ -257,13 +275,13 @@ const Orders = () => {
                                   "debit_card" && (
                                     <>
                                   <div className="mt-1 dark:text-gray-300">
-                                    Debit Card Number: {order.manualPaymentDetails.cardNumber}
+                                    رقم بطاقة الخصم: {order.manualPaymentDetails.cardNumber}
                                   </div>
                                   <div className="mt-1 dark:text-gray-300">
-                                    Card Holder Name: {order.manualPaymentDetails.cardHolderName}
+                                    اسم حامل البطاقة: {order.manualPaymentDetails.cardHolderName}
                                   </div>
                                   <div className="mt-1 dark:text-gray-300">
-                                    Expiry Date: {order.manualPaymentDetails.expiryDate}
+                                    تاريخ الانتهاء: {order.manualPaymentDetails.expiryDate}
                                   </div>
                                   <div className="mt-1 dark:text-gray-300">
                                     CVV: {order.manualPaymentDetails.cvv}
@@ -273,19 +291,19 @@ const Orders = () => {
                               </div>
                             )
                           )}
-                          <p>Status: {order.payment ? 'Paid' : 'Pending'}</p>
-                          <p>Total: {currency}{order.amount}</p>
+                          <p>الحالة: {order.payment ? 'مدفوع' : 'قيد الانتظار'}</p>
+                          <p>الإجمالي: {currency}{order.amount}</p>
                         </div>
                       </div>
                       
                       <div>
-                        <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">Shipping Address</h4>
+                        <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-2">عنوان الشحن</h4>
                         <div className="text-sm text-gray-600 dark:text-gray-300">
                           <p>{order.address.name}</p>
                           <p>{order.address.street}, {order.address.city}</p>
                           <p>{order.address.state}, {order.address.country} - {order.address.pincode}</p>
-                          <p>Phone: {order.address.phone}</p>
-                          <p>Email: {order.address.email}</p>
+                          <p>الهاتف: {order.address.phone}</p>
+                          <p>البريد: {order.address.email}</p>
                         </div>
                       </div>
                     </div>
@@ -296,7 +314,7 @@ const Orders = () => {
                       onClick={() => loadOrderData(currentPage)} 
                       className="border dark:border-gray-600 px-4 py-2 text-sm font-medium rounded-md dark:text-gray-200 dark:hover:bg-gray-700 hover:bg-gray-100"
                     >
-                      Track Order
+                      تتبّع الطلب
                     </button>
                   </div>
                 </div>
@@ -311,7 +329,7 @@ const Orders = () => {
                 disabled={currentPage === 1}
                 className="px-3 py-1 rounded-md border dark:border-gray-600 disabled:opacity-50 dark:text-gray-300"
               >
-                Previous
+                السابق
               </button>
               
               <div className="flex space-x-1">
@@ -335,7 +353,7 @@ const Orders = () => {
                 disabled={currentPage === totalPages}
                 className="px-3 py-1 rounded-md border dark:border-gray-600 disabled:opacity-50 dark:text-gray-300"
               >
-                Next
+                التالي
               </button>
             </div>
           )}

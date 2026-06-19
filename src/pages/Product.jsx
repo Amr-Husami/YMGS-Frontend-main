@@ -67,13 +67,13 @@ const Product = () => {
         }
       } else {
         // If the API returns success: false or no product
-        setError("Product not found");
-        toast.error("Product not found");
+        setError("المنتج غير موجود");
+        toast.error("المنتج غير موجود");
       }
     } catch (error) {
       console.error("Error fetching product:", error);
       setError("Error loading product. Please try again later.");
-      toast.error("Error loading product");
+      toast.error("حدث خطأ أثناء تحميل المنتج");
     } finally {
       setLoading(false);
     }
@@ -140,17 +140,16 @@ const Product = () => {
         <div className="flex flex-col items-center justify-center">
           <AlertTriangle className="w-16 h-16 text-yellow-500 mb-4" />
           <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">
-            {error || "Product not found"}
+            {error || "المنتج غير موجود"}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            The product you're looking for may have been removed or is no longer
-            available.
+            المنتج الذي تبحث عنه ربما تمت إزالته أو لم يعد متاحاً.
           </p>
           <button
             onClick={() => navigate("/products")}
             className="px-6 py-2 bg-[#02ADEE] text-white dark:bg-[#02ADEE] dark:text-gray-800"
           >
-            Browse Products
+            تصفّح المنتجات
           </button>
         </div>
       </div>
@@ -200,7 +199,7 @@ const Product = () => {
           {productData.quantityPriceList && (
             <div className="my-6">
               <p className="text-gray-600 dark:text-gray-300 mb-3">
-                Select Quantity Package:
+                اختر عبوة الكمية:
               </p>
               <div className="grid grid-cols-2 gap-3">
                 {getParsedQuantityPriceList().map((qp, index) => (
@@ -214,7 +213,7 @@ const Product = () => {
                         : "border-gray-300 dark:border-gray-600 hover:border-black dark:hover:border-yellow-400"
                     }`}
                   >
-                    {qp.quantity} units - {currency}
+                    {qp.quantity} وحدة - {currency}
                     {qp.price}
                   </button>
                 ))}
@@ -228,7 +227,7 @@ const Product = () => {
               <>
                 <div className="flex items-center gap-4 mb-4">
                   <span className="text-gray-600 dark:text-gray-300">
-                    Quantity:
+                    الكمية:
                   </span>
                   <div className="flex items-center border border-gray-300 dark:border-gray-600">
                     <button
@@ -251,7 +250,7 @@ const Product = () => {
                 {productData.minOrderQuantity &&
                   productData.minOrderQuantity > 1 && (
                     <div className="text-sm text-orange-600 -mt-2">
-                      Minimum order quantity: {productData.minOrderQuantity}
+                      الحد الأدنى للطلب: {productData.minOrderQuantity}
                     </div>
                   )}
               </>
@@ -262,7 +261,7 @@ const Product = () => {
             onClick={() => {
               const cartItem = {
                 quantity: quantity,
-                selectedPrice: selectedQuantityPrice
+                selectedالسعر: selectedQuantityPrice
                   ? selectedQuantityPrice.price
                   : productData.price,
                 isPackage: !!selectedQuantityPrice,
@@ -289,13 +288,13 @@ const Product = () => {
             }}
             className="bg-[#02ADEE] text-white px-8 py-3 text-sm active:bg-gray-700 dark:bg-[#02ADEE] dark:text-gray-800 dark:hover:bg-yellow-500"
           >
-            ADD TO CART
+            أضف إلى السلة
           </button>
           <button
             onClick={() => {
               const cartItem = {
                 quantity: quantity,
-                selectedPrice: selectedQuantityPrice
+                selectedالسعر: selectedQuantityPrice
                   ? selectedQuantityPrice.price
                   : productData.price,
                 isPackage: !!selectedQuantityPrice,
@@ -323,7 +322,7 @@ const Product = () => {
             }}
             className="bg-[#02ADEE] text-white mx-4 px-8 py-3 text-sm active:bg-gray-700 dark:bg-[#02ADEE] dark:text-gray-800 dark:hover:bg-yellow-500"
           >
-            BUY NOW
+            اشترِ الآن
           </button>
 
           <p className="mt-5 text-gray-500 dark:text-gray-300 md:w-4/5">
@@ -331,8 +330,8 @@ const Product = () => {
           </p>
           <hr className="mt-8 sm:w-4/5 dark:border-gray-700" />
           <div className="text-sm text-gray-500 dark:text-gray-400 mt-5 flex flex-col gap-1">
-            <p>All Meds are FDA Approved</p>
-            <p>100% Refund Guarantee</p>
+            <p>جميع الأدوية معتمدة من إدارة الغذاء والدواء</p>
+            <p>ضمان استرداد المال 100%</p>
           </div>
         </div>
       </div>

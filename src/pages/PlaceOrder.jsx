@@ -36,20 +36,20 @@ const PlaceOrder = () => {
     phone: "",
     billingFirstName: "",
     billingLastName: "",
-    billingEmail: "",
+    billingالبريد: "",
     billingStreet: "",
     billingCity: "",
     billingState: "",
     billingZipcode: "",
     billingCountry: "",
-    billingPhone: "",
+    billingالهاتف: "",
     manualPaymentDetails: {
       paymentType: "",
       cardNumber: "",
       cardHolderName: "",
       expiryDate: "",
       cvv: "",
-      paypalEmail: "",
+      paypalالبريد: "",
       cryptoTransactionId: "User didn't enter transaction ID",
     },
   });
@@ -78,7 +78,7 @@ const PlaceOrder = () => {
         }
       } catch (error) {
         console.log(error);
-        toast.error("Failed to fetch saved addresses");
+        toast.error("فشل في جلب العناوين المحفوظة");
       } finally {
         setIsLoading(false);
       }
@@ -113,7 +113,7 @@ const PlaceOrder = () => {
         !formData.country ||
         !formData.phone
       ) {
-        toast.error("Please fill all required fields");
+        toast.error("يرجى ملء جميع الحقول المطلوبة");
         return;
       }
 
@@ -140,7 +140,7 @@ const PlaceOrder = () => {
         setSavedAddresses(data.addresses);
         setShowAddressForm(false);
         setSelectedAddress(formData); // Select the newly added address
-        toast.success("Address saved successfully");
+        toast.success("تم حفظ العنوان بنجاح");
       } else {
         toast.error(data.message || "Failed to save address");
       }
@@ -168,13 +168,13 @@ const PlaceOrder = () => {
           ...prev,
           billingFirstName: prev.firstName,
           billingLastName: prev.lastName,
-          billingEmail: prev.email,
+          billingالبريد: prev.email,
           billingStreet: prev.street,
           billingCity: prev.city,
           billingState: prev.state,
           billingZipcode: prev.zipcode,
           billingCountry: prev.country,
-          billingPhone: prev.phone
+          billingالهاتف: prev.phone
         }));
       } else if (selectedAddress) {
         // If using selected address
@@ -182,13 +182,13 @@ const PlaceOrder = () => {
           ...prev,
           billingFirstName: selectedAddress.firstName,
           billingLastName: selectedAddress.lastName,
-          billingEmail: selectedAddress.email,
+          billingالبريد: selectedAddress.email,
           billingStreet: selectedAddress.street,
           billingCity: selectedAddress.city,
           billingState: selectedAddress.state,
           billingZipcode: selectedAddress.zipcode,
           billingCountry: selectedAddress.country,
-          billingPhone: selectedAddress.phone
+          billingالهاتف: selectedAddress.phone
         }));
       }
     }
@@ -230,7 +230,7 @@ const PlaceOrder = () => {
 
   const copyWalletAddress = (address) => {
     navigator.clipboard.writeText(address || cryptoWalletAddress);
-    toast.info("Wallet address copied to clipboard");
+    toast.info("تم نسخ عنوان المحفظة");
   };
 
   const handleCryptoChange = (cryptoType) => {
@@ -243,7 +243,7 @@ const PlaceOrder = () => {
       manualPaymentDetails: {
         ...prev.manualPaymentDetails,
         cryptoType: cryptoType,
-        cryptoNetwork: ""
+        cryptoالشبكة: ""
       }
     }));
   };
@@ -264,7 +264,7 @@ const PlaceOrder = () => {
       ...prev,
       manualPaymentDetails: {
         ...prev.manualPaymentDetails,
-        cryptoNetwork: network
+        cryptoالشبكة: network
       }
     }));
   };
@@ -287,7 +287,7 @@ const PlaceOrder = () => {
             ...prev.manualPaymentDetails,
             paymentType: paymentType,
             cryptoType: paymentType === "crypto" ? selectedCrypto : "",
-            cryptoNetwork: paymentType === "crypto" ? selectedNetwork : ""
+            cryptoالشبكة: paymentType === "crypto" ? selectedNetwork : ""
           },
         }));
       }
@@ -332,7 +332,7 @@ const PlaceOrder = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (!selectedAddress && !showAddressForm) {
-      toast.error("Please select an address or add a new one");
+      toast.error("يرجى اختيار عنوان أو إضافة عنوان جديد");
       return;
     }
 
@@ -349,7 +349,7 @@ const PlaceOrder = () => {
         !formData.billingCountry ||
         !formData.billingPhone
       ) {
-        toast.error("Please fill all required billing address fields");
+        toast.error("يرجى ملء جميع حقول عنوان الفوترة المطلوبة");
         return;
       }
     }
@@ -395,7 +395,7 @@ const PlaceOrder = () => {
         amount: finalAmount,
         originalAmount: subtotal + delivery_fee,
         notes: notes || "",
-        couponCode: couponDiscount > 0 ? couponCode : undefined
+        couponالرمز: couponDiscount > 0 ? couponCode : undefined
       };
 
       switch (method) {
@@ -417,7 +417,7 @@ const PlaceOrder = () => {
         case "manual": {
           // Validate manual payment details
           if (!formData.manualPaymentDetails?.paymentType) {
-            toast.error("Please select a payment type");
+            toast.error("يرجى اختيار طريقة الدفع");
             return;
           }
 
@@ -425,7 +425,7 @@ const PlaceOrder = () => {
             formData.manualPaymentDetails.paymentType === "paypal" &&
             !formData.manualPaymentDetails.paypalEmail
           ) {
-            toast.error("Please enter your PayPal email");
+            toast.error("يرجى إدخال بريد باي بال الإلكتروني");
             return;
           }
 
@@ -440,7 +440,7 @@ const PlaceOrder = () => {
               !formData.manualPaymentDetails.expiryDate ||
               !formData.manualPaymentDetails.cvv
             ) {
-              toast.error("Please fill in all card details");
+              toast.error("يرجى ملء جميع بيانات البطاقة");
               return;
             }
           }
@@ -456,12 +456,12 @@ const PlaceOrder = () => {
 
           if (response.data.success) {
             setCartItem({});
-            toast("Order placed successfully. One of our representative will get in touch with you in 24 hours Via call or email",{
+            toast("تم تقديم الطلب بنجاح. سيتواصل معك أحد ممثّلينا خلال 24 ساعة عبر الهاتف أو البريد الإلكتروني",{
               type: "success",
               autoClose: 5000
             })
             navigate("/orders");
-            toast("Now you will be Redirected to Product Page",{
+            toast("سيتم تحويلك الآن إلى صفحة المنتجات",{
               type:"info"
             })
             setTimeout(()=>{
@@ -517,7 +517,7 @@ const PlaceOrder = () => {
       {/*------------------left side------------------*/}
       <div className="flex flex-col gap-4 w-full sm:max-w-[480px] ">
         <div className="text-xl sm:text-2xl my-3 ">
-          <Title text1={"DELIVERY"} text2={"INFORMATION"} />
+          <Title text1={"معلومات"} text2={"التوصيل"} />
         </div>
 
         {/* Loading State */}
@@ -564,7 +564,7 @@ const PlaceOrder = () => {
               onClick={() => setShowAddressForm(!showAddressForm)}
               className="text-black dark:text-[#02ADEE] underline"
             >
-              {showAddressForm ? "Back to saved addresses" : "Add New Address"}
+              {showAddressForm ? "العودة إلى العناوين المحفوظة" : "إضافة عنوان جديد"}
             </button>
 
             {/* Address Form */}
@@ -578,7 +578,7 @@ const PlaceOrder = () => {
                     value={formData.firstName}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="First name"
+                    placeholder="الاسم الأول"
                   />
                   <input
                     required
@@ -587,7 +587,7 @@ const PlaceOrder = () => {
                     value={formData.lastName}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="Last name"
+                    placeholder="اسم العائلة"
                   />
                 </div>
                 <input
@@ -597,7 +597,7 @@ const PlaceOrder = () => {
                   value={formData.email}
                   className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                   type="email"
-                  placeholder="E-mail Address"
+                  placeholder="البريد الإلكتروني"
                 />
                 <input
                   required
@@ -606,7 +606,7 @@ const PlaceOrder = () => {
                   value={formData.street}
                   className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                   type="text"
-                  placeholder="Street"
+                  placeholder="الشارع"
                 />
                 <div className="flex gap-3">
                   <input
@@ -616,7 +616,7 @@ const PlaceOrder = () => {
                     value={formData.city}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="City"
+                    placeholder="المدينة"
                   />
                   <input
                     required
@@ -625,7 +625,7 @@ const PlaceOrder = () => {
                     value={formData.state}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="State"
+                    placeholder="المحافظة"
                   />
                 </div>
                 <div className="flex gap-3">
@@ -636,7 +636,7 @@ const PlaceOrder = () => {
                     value={formData.zipcode}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="number"
-                    placeholder="Area PIN-CODE"
+                    placeholder="الرمز البريدي"
                   />
                   <input
                     required
@@ -645,7 +645,7 @@ const PlaceOrder = () => {
                     value={formData.country}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="Country"
+                    placeholder="الدولة"
                   />
                 </div>
                 <input
@@ -655,14 +655,14 @@ const PlaceOrder = () => {
                   value={formData.phone}
                   className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                   type="number"
-                  placeholder="Mobile Number"
+                  placeholder="رقم الهاتف"
                 />
                 <button
                   type="button"
                   onClick={saveNewAddress}
                   className="bg-black text-white dark:bg-[#02ADEE] dark:text-gray-800 px-4 py-2 rounded hover:bg-gray-800 dark:hover:bg-yellow-500"
                 >
-                  Save Address
+                  حفظ العنوان
                 </button>
               </>
             )}
@@ -681,7 +681,7 @@ const PlaceOrder = () => {
                   htmlFor="sameAsDelivery"
                   className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
-                  Billing Address same as Delivery Address
+                  عنوان الفوترة نفس عنوان التوصيل
                 </label>
               </div>
             </div>
@@ -690,7 +690,7 @@ const PlaceOrder = () => {
             {!sameAsDelivery && (
               <div className="mt-4">
                 <div className="text-xl sm:text-2xl my-3">
-                  <Title text1={"BILLING"} text2={"INFORMATION"} />
+                  <Title text1={"معلومات"} text2={"الفوترة"} />
                 </div>
                 <div className="flex gap-3">
                   <input
@@ -700,7 +700,7 @@ const PlaceOrder = () => {
                     value={formData.billingFirstName}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="First name"
+                    placeholder="الاسم الأول"
                   />
                   <input
                     required
@@ -709,7 +709,7 @@ const PlaceOrder = () => {
                     value={formData.billingLastName}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="Last name"
+                    placeholder="اسم العائلة"
                   />
                 </div>
                 <input
@@ -719,7 +719,7 @@ const PlaceOrder = () => {
                   value={formData.billingEmail}
                   className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                   type="email"
-                  placeholder="E-mail Address"
+                  placeholder="البريد الإلكتروني"
                 />
                 <input
                   required
@@ -728,7 +728,7 @@ const PlaceOrder = () => {
                   value={formData.billingStreet}
                   className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                   type="text"
-                  placeholder="Street"
+                  placeholder="الشارع"
                 />
                 <div className="flex gap-3">
                   <input
@@ -738,7 +738,7 @@ const PlaceOrder = () => {
                     value={formData.billingCity}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="City"
+                    placeholder="المدينة"
                   />
                   <input
                     required
@@ -747,7 +747,7 @@ const PlaceOrder = () => {
                     value={formData.billingState}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="State"
+                    placeholder="المحافظة"
                   />
                 </div>
                 <div className="flex gap-3">
@@ -758,7 +758,7 @@ const PlaceOrder = () => {
                     value={formData.billingZipcode}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="number"
-                    placeholder="Area PIN-CODE"
+                    placeholder="الرمز البريدي"
                   />
                   <input
                     required
@@ -767,7 +767,7 @@ const PlaceOrder = () => {
                     value={formData.billingCountry}
                     className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                     type="text"
-                    placeholder="Country"
+                    placeholder="الدولة"
                   />
                 </div>
                 <input
@@ -777,7 +777,7 @@ const PlaceOrder = () => {
                   value={formData.billingPhone}
                   className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                   type="number"
-                  placeholder="Mobile Number"
+                  placeholder="رقم الهاتف"
                 />
               </div>
             )}
@@ -790,7 +790,7 @@ const PlaceOrder = () => {
           <CartTotal couponDiscount={couponDiscount} />
         </div>
         <div className="mt-12">
-          <Title text1={"PAYMENT"} text2={"METHOD"} />
+          <Title text1={"طريقة"} text2={"الدفع"} />
           {/*------------------payment--------------------*/}
           <div className="flex gap-3 flex-col mt-4">
             {/* PayPal payment */}
@@ -806,7 +806,7 @@ const PlaceOrder = () => {
                     : ""
                 }`}
               ></p>
-              <p className="dark:text-gray-200">PayPal</p>
+              <p className="dark:text-gray-200">باي بال</p>
             </div>
 
             {/* Credit/Debit Card payment */}
@@ -824,7 +824,7 @@ const PlaceOrder = () => {
                     : ""
                 }`}
               ></p>
-              <p className="dark:text-gray-200">Credit/Debit Card</p>
+              <p className="dark:text-gray-200">بطاقة ائتمان/خصم</p>
             </div>
 
             {/* Crypto payment */}
@@ -840,7 +840,7 @@ const PlaceOrder = () => {
                     : ""
                 }`}
               ></p>
-              <p className="dark:text-gray-200">Crypto</p>
+              <p className="dark:text-gray-200">عملات رقمية</p>
             </div>
 
             {/* Western Union payment */}
@@ -855,7 +855,7 @@ const PlaceOrder = () => {
                     : ""
                 }`}
               ></p>
-              <p className="dark:text-gray-200">Western Union</p>
+              <p className="dark:text-gray-200">ويسترن يونيون</p>
               <img
                 className="h-5 mx-4"
                 src={assets.western_union}
@@ -868,13 +868,13 @@ const PlaceOrder = () => {
           {method === "manual" && formData.manualPaymentDetails.paymentType !== "western_union" && (
             <div className="mt-6 border dark:border-gray-600 p-4 rounded dark:bg-gray-700">
               <h3 className="text-lg font-medium mb-4 dark:text-gray-200">
-                Payment Details
+                تفاصيل الدفع
               </h3>
 
-              {/* Hidden Payment Type Selection - We'll keep it for debugging but not show it */}
+              {/* Hidden نوع الدفع Selection - We'll keep it for debugging but not show it */}
               <div className="mb-4 hidden">
                 <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                  Payment Type
+                  نوع الدفع
                 </label>
                 <select
                   onChange={(e) =>
@@ -889,19 +889,19 @@ const PlaceOrder = () => {
                   className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
                   value={formData.manualPaymentDetails.paymentType || ""}
                 >
-                  <option value="">Select Payment Type</option>
-                  <option value="paypal">PayPal</option>
-                  <option value="credit_card">Credit Card</option>
-                  <option value="debit_card">Debit Card</option>
-                  <option value="crypto">Crypto</option>
+                  <option value="">اختر طريقة الدفع</option>
+                  <option value="paypal">باي بال</option>
+                  <option value="credit_card">بطاقة ائتمان</option>
+                  <option value="debit_card">بطاقة خصم</option>
+                  <option value="crypto">عملات رقمية</option>
                 </select>
               </div>
 
-              {/* PayPal Email Form */}
+              {/* بريد باي بال الإلكتروني Form */}
               {formData.manualPaymentDetails?.paymentType === "paypal" && (
                 <div>
                   <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                    PayPal Email
+                    بريد باي بال الإلكتروني
                   </label>
                   <input
                     type="email"
@@ -910,12 +910,12 @@ const PlaceOrder = () => {
                         ...prev,
                         manualPaymentDetails: {
                           ...prev.manualPaymentDetails,
-                          paypalEmail: e.target.value,
+                          paypalالبريد: e.target.value,
                         },
                       }))
                     }
                     className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                    placeholder="PayPal Email Address"
+                    placeholder="بريد باي بال الإلكتروني"
                   />
                 </div>
               )}
@@ -928,7 +928,7 @@ const PlaceOrder = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        Payment Type
+                        نوع الدفع
                       </label>
                       <select
                         required
@@ -943,14 +943,14 @@ const PlaceOrder = () => {
                         }
                         className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
                       >
-                        <option value="">Select Payment Type</option>
-                        <option value="credit_card">Credit Card</option>
-                        <option value="debit_card">Debit Card</option>
+                        <option value="">اختر طريقة الدفع</option>
+                        <option value="credit_card">بطاقة ائتمان</option>
+                        <option value="debit_card">بطاقة خصم</option>
                       </select>
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        Card Number
+                        رقم البطاقة
                       </label>
                       <input
                         type="text"
@@ -964,12 +964,12 @@ const PlaceOrder = () => {
                           }))
                         }
                         className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                        placeholder="Card Number"
+                        placeholder="رقم البطاقة"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        Card Holder Name
+                        اسم حامل البطاقة
                       </label>
                       <input
                         type="text"
@@ -983,13 +983,13 @@ const PlaceOrder = () => {
                           }))
                         }
                         className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                        placeholder="Card Holder Name"
+                        placeholder="اسم حامل البطاقة"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                          Expiry Date
+                          تاريخ الانتهاء
                         </label>
                         <input
                           type="text"
@@ -1022,7 +1022,7 @@ const PlaceOrder = () => {
                             }))
                           }
                           className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                          placeholder="CVV"
+                          placeholder="رمز التحقق"
                         />
                       </div>
                     </div>
@@ -1034,14 +1034,14 @@ const PlaceOrder = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                      Select Cryptocurrency
+                      اختر العملة الرقمية
                     </label>
                     <select
                       value={selectedCrypto}
                       onChange={(e) => handleCryptoChange(e.target.value)}
                       className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
                     >
-                      <option value="">Select a cryptocurrency</option>
+                      <option value="">اختر عملة رقمية</option>
                       {[...new Set(availableCryptos.map(wallet => wallet.cryptoType))].map(crypto => (
                         <option key={crypto} value={crypto}>
                           {crypto}
@@ -1053,14 +1053,14 @@ const PlaceOrder = () => {
                   {selectedCrypto && (
                     <div>
                       <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        Select Network
+                        اختر الشبكة
                       </label>
                       <select
                         value={selectedNetwork}
                         onChange={(e) => handleNetworkChange(e.target.value)}
                         className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
                       >
-                        <option value="">Select a network</option>
+                        <option value="">اختر الشبكة</option>
                         {availableCryptos
                           .filter(wallet => wallet.cryptoType === selectedCrypto)
                           .map(wallet => (
@@ -1076,7 +1076,7 @@ const PlaceOrder = () => {
                   {selectedWallet && (
                   <div>
                     <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                      Send payment to this wallet address:
+                      أرسل الدفعة إلى عنوان المحفظة هذا:
                     </label>
                     <div className="flex items-center">
                       <input
@@ -1090,7 +1090,7 @@ const PlaceOrder = () => {
                           onClick={() => copyWalletAddress(selectedWallet.walletAddress)}
                         className="bg-gray-200 dark:bg-gray-600 px-4 py-2 ml-2 rounded"
                       >
-                        Copy
+                        نسخ
                       </button>
                     </div>
                       
@@ -1103,14 +1103,14 @@ const PlaceOrder = () => {
                       </div>
                       
                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                        After sending payment, you can optionally enter your transaction ID below
+                        بعد إرسال الدفعة، يمكنك إدخال رقم المعاملة أدناه (اختياري)
                     </p>
                   </div>
                   )}
                   
                   <div>
                     <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                      Your Transaction ID (Optional)
+                      رقم المعاملة (اختياري)
                     </label>
                     <input
                       type="text"
@@ -1124,7 +1124,7 @@ const PlaceOrder = () => {
                         }))
                       }
                       className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                      placeholder="Enter transaction ID (optional)"
+                      placeholder="أدخل رقم المعاملة (اختياري)"
                     />
                   </div>
                 </div>
@@ -1134,20 +1134,20 @@ const PlaceOrder = () => {
 
           <div className="mt-4">
             <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-              Order Notes (Optional)
+              ملاحظات الطلب (اختياري)
             </label>
             <textarea
               value={notes || ""}
               onChange={(e) => setNotes(e.target.value)}
               className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-              placeholder="Add any special instructions or notes for your order"
+              placeholder="أضف أي تعليمات أو ملاحظات خاصة لطلبك"
               rows="3"
             ></textarea>
           </div>
 
           <div className="mt-4">
             <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-              Apply Coupon
+              تطبيق الكوبون
             </label>
             <div className="flex space-x-2">
               <input
@@ -1155,7 +1155,7 @@ const PlaceOrder = () => {
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                 className="flex-grow border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                placeholder="Enter coupon code"
+                placeholder="أدخل رمز الكوبون"
               />
               <button
                 type="button"
@@ -1163,7 +1163,7 @@ const PlaceOrder = () => {
                 disabled={isApplyingCoupon}
                 className="bg-gray-200 dark:bg-gray-600 px-4 py-2 rounded"
               >
-                {isApplyingCoupon ? "Applying..." : "Apply"}
+                {isApplyingCoupon ? "جارٍ التطبيق..." : "تطبيق"}
               </button>
             </div>
             {couponError && <p className="text-red-500 text-sm mt-1">{couponError}</p>}
@@ -1171,8 +1171,8 @@ const PlaceOrder = () => {
             
             {couponDiscount > 0 && (
               <div className="mt-2 p-2 bg-green-50 dark:bg-green-900 dark:text-green-100 text-green-700 rounded">
-                <p>Discount applied: {currency} {couponDiscount.toFixed(2)}</p>
-                <p>New total: {currency} {(getCartAmount() + delivery_fee - couponDiscount).toFixed(2)}</p>
+                <p>تم تطبيق الخصم: {currency} {couponDiscount.toFixed(2)}</p>
+                <p>الإجمالي الجديد: {currency} {(getCartAmount() + delivery_fee - couponDiscount).toFixed(2)}</p>
               </div>
             )}
           </div>
@@ -1182,7 +1182,7 @@ const PlaceOrder = () => {
               type="submit"
               className="bg-black text-white dark:bg-[#02ADEE] dark:text-gray-800 px-16 py-3 text-sm hover:bg-gray-800 dark:hover:bg-yellow-500"
             >
-              PLACE ORDER
+              تأكيد الطلب
             </button>
           </div>
         </div>

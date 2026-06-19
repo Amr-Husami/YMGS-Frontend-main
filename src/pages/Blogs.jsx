@@ -60,22 +60,22 @@ const Blogs = () => {
     <>
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-900 dark:text-white">Our Blog</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-900 dark:text-white">مدوّنتنا</h1>
         <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto mb-12">
-          Stay updated with the latest health news, medical insights, and useful information on pharmaceuticals and wellness.
+          ابقَ على اطّلاع بأحدث الأخبار الصحية والمعلومات الطبية المفيدة حول الأدوية والعافية.
         </p>
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <Loader2 className="animate-spin mr-2" size={30} />
-            <span className="text-lg text-gray-700 dark:text-gray-300">Loading blogs...</span>
+            <span className="text-lg text-gray-700 dark:text-gray-300">جارٍ تحميل المقالات...</span>
           </div>
         ) : (
           <>
             {blogs.length === 0 ? (
               <div className="text-center py-10">
-                <p className="text-lg text-gray-600 dark:text-gray-400">No blog posts available at the moment.</p>
-                <p className="text-gray-500 dark:text-gray-500 mt-2">Please check back later for new content.</p>
+                <p className="text-lg text-gray-600 dark:text-gray-400">لا توجد مقالات متاحة حالياً.</p>
+                <p className="text-gray-500 dark:text-gray-500 mt-2">يرجى التحقق لاحقاً للاطّلاع على محتوى جديد.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -108,7 +108,7 @@ const Blogs = () => {
                         {truncateContent(blog.content)}
                       </p>
                       <button className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
-                        Read More
+                        اقرأ المزيد
                       </button>
                     </div>
                   </div>

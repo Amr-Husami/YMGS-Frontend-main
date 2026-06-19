@@ -15,8 +15,8 @@ const Contact = () => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [contactInfo, setContactInfo] = useState({
-    contactEmail: 'info@souqalsham.com',
-    contactPhone: '+963 11 000 0000',
+    contactالبريد: 'info@souqalsham.com',
+    contactالهاتف: '+963 11 000 0000',
     contactAddress: 'دمشق، الجمهورية العربية السورية',
     businessHours: 'السبت - الخميس: 9:00 صباحاً - 9:00 مساءً\nالجمعة: 2:00 مساءً - 9:00 مساءً'
   })
@@ -107,7 +107,7 @@ const Contact = () => {
           <img
             src={assets.contact}
             className='w-full md:max-w-[480px] rounded-2xl'
-            alt="صيدلية الشام"
+            alt="شفاء"
             loading="eager"
             width="480"
             height="360"

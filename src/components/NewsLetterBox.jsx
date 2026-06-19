@@ -20,7 +20,7 @@ const NewsLetterBox = () => {
             <div className="bg-accent dark:bg-gray-700 rounded-2xl p-8 md:p-12">
                 <div className="max-w-2xl mx-auto text-center">
                     <h2 className="font-display text-3xl md:text-4xl font-semibold text-primary dark:text-[#02ADEE]">
-                        ابقَ على اطلاع مع صيدلية الشام
+                        ابقَ على اطلاع مع شفاء
                     </h2>
                     <p className="mt-4 text-gray-600 dark:text-gray-300">
                         اشترك في نشرتنا الإخبارية واحصل على آخر المنتجات والعروض الخاصة مباشرةً في بريدك الإلكتروني.

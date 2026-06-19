@@ -66,7 +66,7 @@ const Login = () => {
           <div className="rounded-md shadow-sm space-y-4">
             {currentState === 'Sign up' && (
               <div>
-                <label htmlFor="name" className="sr-only">Name</label>
+                <label htmlFor="name" className="sr-only">الاسم</label>
                 <input
                   id="name"
                   name="name"
@@ -80,7 +80,7 @@ const Login = () => {
               </div>
             )}
             <div>
-              <label htmlFor="email" className="sr-only">Email address</label>
+              <label htmlFor="email" className="sr-only">البريد الإلكتروني</label>
               <input
                 id="email"
                 name="email"
@@ -93,7 +93,7 @@ const Login = () => {
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">Password</label>
+              <label htmlFor="password" className="sr-only">كلمة المرور</label>
               <input
                 id="password"
                 name="password"

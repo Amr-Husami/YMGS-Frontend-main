@@ -25,20 +25,20 @@ const GuestCheckout = () => {
     phone: "",
     billingFirstName: "",
     billingLastName: "",
-    billingEmail: "",
+    billingالبريد: "",
     billingStreet: "",
     billingCity: "",
     billingState: "",
     billingZipcode: "",
     billingCountry: "",
-    billingPhone: "",
+    billingالهاتف: "",
     manualPaymentDetails: {
       paymentType: "",
       cardNumber: "",
       cardHolderName: "",
       expiryDate: "",
       cvv: "",
-      paypalEmail: "",
+      paypalالبريد: "",
       cryptoTransactionId: "User didn't enter transaction ID",
     },
   });
@@ -71,7 +71,7 @@ const GuestCheckout = () => {
 
   const copyWalletAddress = (address) => {
     navigator.clipboard.writeText(address || cryptoWalletAddress);
-    toast.info("Wallet address copied to clipboard");
+    toast.info("تم نسخ عنوان المحفظة");
   };
 
   const handleMethodChange = (newMethod, paymentType = "") => {
@@ -90,7 +90,7 @@ const GuestCheckout = () => {
           ...prev.manualPaymentDetails,
           paymentType: paymentType,
           cryptoType: paymentType === "crypto" ? selectedCrypto : "",
-          cryptoNetwork: paymentType === "crypto" ? selectedNetwork : ""
+          cryptoالشبكة: paymentType === "crypto" ? selectedNetwork : ""
         },
       }));
     }
@@ -111,13 +111,13 @@ const GuestCheckout = () => {
         ...prev,
         billingFirstName: prev.firstName,
         billingLastName: prev.lastName,
-        billingEmail: prev.email,
+        billingالبريد: prev.email,
         billingStreet: prev.street,
         billingCity: prev.city,
         billingState: prev.state,
         billingZipcode: prev.zipcode,
         billingCountry: prev.country,
-        billingPhone: prev.phone
+        billingالهاتف: prev.phone
       }));
     }
   };
@@ -167,7 +167,7 @@ const GuestCheckout = () => {
       manualPaymentDetails: {
         ...prev.manualPaymentDetails,
         cryptoType: cryptoType,
-        cryptoNetwork: ""
+        cryptoالشبكة: ""
       }
     }));
   };
@@ -188,7 +188,7 @@ const GuestCheckout = () => {
       ...prev,
       manualPaymentDetails: {
         ...prev.manualPaymentDetails,
-        cryptoNetwork: network
+        cryptoالشبكة: network
       }
     }));
   };
@@ -207,7 +207,7 @@ const GuestCheckout = () => {
       !formData.country ||
       !formData.phone
     ) {
-      toast.error("Please fill all required fields");
+      toast.error("يرجى ملء جميع الحقول المطلوبة");
       return;
     }
 
@@ -223,14 +223,14 @@ const GuestCheckout = () => {
         !formData.billingCountry ||
         !formData.billingPhone
       ) {
-        toast.error("Please fill all required billing address fields");
+        toast.error("يرجى ملء جميع حقول عنوان الفوترة المطلوبة");
         return;
       }
     }
 
     if (method === "manual") {
       if (!formData.manualPaymentDetails?.paymentType) {
-        toast.error("Please select a payment type");
+        toast.error("يرجى اختيار طريقة الدفع");
         return;
       }
 
@@ -238,7 +238,7 @@ const GuestCheckout = () => {
         formData.manualPaymentDetails.paymentType === "paypal" &&
         !formData.manualPaymentDetails.paypalEmail
       ) {
-        toast.error("Please enter your PayPal email");
+        toast.error("يرجى إدخال بريد باي بال الإلكتروني");
         return;
       }
 
@@ -253,7 +253,7 @@ const GuestCheckout = () => {
           !formData.manualPaymentDetails.expiryDate ||
           !formData.manualPaymentDetails.cvv
         ) {
-          toast.error("Please fill in all card details");
+          toast.error("يرجى ملء جميع بيانات البطاقة");
           return;
         }
       }
@@ -299,11 +299,11 @@ const GuestCheckout = () => {
         originalAmount: subtotal + delivery_fee,
         isGuest: true,
         notes: notes,
-        couponCode: couponDiscount > 0 ? couponCode : undefined,
+        couponالرمز: couponDiscount > 0 ? couponCode : undefined,
         manualPaymentDetails: method === "manual" ? {
           ...formData.manualPaymentDetails,
           cryptoType: selectedCrypto,
-          cryptoNetwork: selectedNetwork
+          cryptoالشبكة: selectedNetwork
         } : undefined
       };
 
@@ -314,11 +314,11 @@ const GuestCheckout = () => {
       
       if (response.data.success) {
         setCartItem({});
-        toast("Order placed successfully. One of our representative will get in touch with you in 24 hours Via call or email",{
+        toast("تم تقديم الطلب بنجاح. سيتواصل معك أحد ممثّلينا خلال 24 ساعة عبر الهاتف أو البريد الإلكتروني",{
           type: "success",
           autoClose: 5000
         })
-        toast("Now you will be Redirected to Product Page",{
+        toast("سيتم تحويلك الآن إلى صفحة المنتجات",{
           type:"info"
         })
         setTimeout(()=>{
@@ -342,11 +342,11 @@ const GuestCheckout = () => {
     >
       <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
         <div className="text-xl sm:text-2xl my-3">
-          <Title text1={"GUEST"} text2={"CHECKOUT"} />
+          <Title text1={"الدفع"} text2={"كزائر"} />
         </div>
         
         <p className="text-gray-600 dark:text-gray-300 mb-4">
-          Fill in your information below to place your order without creating an account.
+          املأ بياناتك أدناه لإتمام طلبك دون إنشاء حساب.
         </p>
         
         <div className="flex gap-3">
@@ -357,7 +357,7 @@ const GuestCheckout = () => {
             value={formData.firstName}
             className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="First name"
+            placeholder="الاسم الأول"
           />
           <input
             required
@@ -366,7 +366,7 @@ const GuestCheckout = () => {
             value={formData.lastName}
             className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="Last name"
+            placeholder="اسم العائلة"
           />
         </div>
         <input
@@ -376,7 +376,7 @@ const GuestCheckout = () => {
           value={formData.email}
           className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
           type="email"
-          placeholder="E-mail Address"
+          placeholder="البريد الإلكتروني"
         />
         <input
           required
@@ -385,7 +385,7 @@ const GuestCheckout = () => {
           value={formData.street}
           className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
           type="text"
-          placeholder="Street"
+          placeholder="الشارع"
         />
         <div className="flex gap-3">
           <input
@@ -395,7 +395,7 @@ const GuestCheckout = () => {
             value={formData.city}
             className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="City"
+            placeholder="المدينة"
           />
           <input
             required
@@ -404,7 +404,7 @@ const GuestCheckout = () => {
             value={formData.state}
             className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="State"
+            placeholder="المحافظة"
           />
         </div>
         <div className="flex gap-3">
@@ -415,7 +415,7 @@ const GuestCheckout = () => {
             value={formData.zipcode}
             className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
             type="number"
-            placeholder="Area PIN-CODE"
+            placeholder="الرمز البريدي"
           />
           <input
             required
@@ -424,7 +424,7 @@ const GuestCheckout = () => {
             value={formData.country}
             className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="Country"
+            placeholder="الدولة"
           />
         </div>
         <input
@@ -434,7 +434,7 @@ const GuestCheckout = () => {
           value={formData.phone}
           className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
           type="number"
-          placeholder="Mobile Number"
+          placeholder="رقم الهاتف"
         />
 
         <div className="mt-6">
@@ -450,7 +450,7 @@ const GuestCheckout = () => {
               htmlFor="sameAsDelivery"
               className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
             >
-              Billing Address same as Delivery Address
+              عنوان الفوترة نفس عنوان التوصيل
             </label>
           </div>
         </div>
@@ -458,7 +458,7 @@ const GuestCheckout = () => {
         {!sameAsDelivery && (
           <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
             <div className="text-xl sm:text-2xl my-3">
-              <Title text1={"BILLING"} text2={"INFORMATION"} />
+              <Title text1={"معلومات"} text2={"الفوترة"} />
             </div>
             <div className="flex gap-3">
               <input
@@ -468,7 +468,7 @@ const GuestCheckout = () => {
                 value={formData.billingFirstName}
                 className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                 type="text"
-                placeholder="First name"
+                placeholder="الاسم الأول"
               />
               <input
                 required
@@ -477,7 +477,7 @@ const GuestCheckout = () => {
                 value={formData.billingLastName}
                 className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                 type="text"
-                placeholder="Last name"
+                placeholder="اسم العائلة"
               />
             </div>
             <input
@@ -487,7 +487,7 @@ const GuestCheckout = () => {
               value={formData.billingEmail}
               className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
               type="email"
-              placeholder="E-mail Address"
+              placeholder="البريد الإلكتروني"
             />
             <input
               required
@@ -496,7 +496,7 @@ const GuestCheckout = () => {
               value={formData.billingStreet}
               className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
               type="text"
-              placeholder="Street"
+              placeholder="الشارع"
             />
             <div className="flex gap-3">
               <input
@@ -506,7 +506,7 @@ const GuestCheckout = () => {
                 value={formData.billingCity}
                 className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                 type="text"
-                placeholder="City"
+                placeholder="المدينة"
               />
               <input
                 required
@@ -515,7 +515,7 @@ const GuestCheckout = () => {
                 value={formData.billingState}
                 className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                 type="text"
-                placeholder="State"
+                placeholder="المحافظة"
               />
             </div>
             <div className="flex gap-3">
@@ -526,7 +526,7 @@ const GuestCheckout = () => {
                 value={formData.billingZipcode}
                 className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                 type="number"
-                placeholder="Area PIN-CODE"
+                placeholder="الرمز البريدي"
               />
               <input
                 required
@@ -535,7 +535,7 @@ const GuestCheckout = () => {
                 value={formData.billingCountry}
                 className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
                 type="text"
-                placeholder="Country"
+                placeholder="الدولة"
               />
             </div>
             <input
@@ -545,27 +545,27 @@ const GuestCheckout = () => {
               value={formData.billingPhone}
               className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded py-1.5 px-3.5 w-full"
               type="number"
-              placeholder="Mobile Number"
+              placeholder="رقم الهاتف"
             />
           </div>
         )}
 
         <div className="mt-4">
           <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-            Order Notes (Optional)
+            ملاحظات الطلب (اختياري)
           </label>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-            placeholder="Add any special instructions or notes for your order"
+            placeholder="أضف أي تعليمات أو ملاحظات خاصة لطلبك"
             rows="3"
           ></textarea>
         </div>
 
         <div className="mt-4">
           <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-            Apply Coupon
+            تطبيق الكوبون
           </label>
           <div className="flex space-x-2">
             <input
@@ -573,7 +573,7 @@ const GuestCheckout = () => {
               value={couponCode}
               onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
               className="flex-grow border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-              placeholder="Enter coupon code"
+              placeholder="أدخل رمز الكوبون"
             />
             <button
               type="button"
@@ -581,7 +581,7 @@ const GuestCheckout = () => {
               disabled={isApplyingCoupon}
               className="bg-gray-200 dark:bg-gray-600 px-4 py-2 rounded"
             >
-              {isApplyingCoupon ? "Applying..." : "Apply"}
+              {isApplyingCoupon ? "جارٍ التطبيق..." : "تطبيق"}
             </button>
           </div>
           {couponError && <p className="text-red-500 text-sm mt-1">{couponError}</p>}
@@ -589,8 +589,8 @@ const GuestCheckout = () => {
           
           {couponDiscount > 0 && (
             <div className="mt-2 p-2 bg-green-50 dark:bg-green-900 dark:text-green-100 text-green-700 rounded">
-              <p>Discount applied: {currency} {couponDiscount.toFixed(2)}</p>
-              <p>New total: {currency} {(getCartAmount() + delivery_fee - couponDiscount).toFixed(2)}</p>
+              <p>تم تطبيق الخصم: {currency} {couponDiscount.toFixed(2)}</p>
+              <p>الإجمالي الجديد: {currency} {(getCartAmount() + delivery_fee - couponDiscount).toFixed(2)}</p>
             </div>
           )}
         </div>
@@ -601,7 +601,7 @@ const GuestCheckout = () => {
           <CartTotal couponDiscount={couponDiscount} />
         </div>
         <div className="mt-12">
-          <Title text1={"PAYMENT"} text2={"METHOD"} />
+          <Title text1={"طريقة"} text2={"الدفع"} />
           
           <div className="flex gap-3 flex-col mt-4">
             <div
@@ -616,7 +616,7 @@ const GuestCheckout = () => {
                     : ""
                 }`}
               ></p>
-              <p className="dark:text-gray-200">PayPal</p>
+              <p className="dark:text-gray-200">باي بال</p>
             </div>
 
             <div
@@ -633,7 +633,7 @@ const GuestCheckout = () => {
                     : ""
                 }`}
               ></p>
-              <p className="dark:text-gray-200">Credit/Debit Card</p>
+              <p className="dark:text-gray-200">بطاقة ائتمان/خصم</p>
             </div>
 
             <div
@@ -648,7 +648,7 @@ const GuestCheckout = () => {
                     : ""
                 }`}
               ></p>
-              <p className="dark:text-gray-200">Crypto</p>
+              <p className="dark:text-gray-200">عملات رقمية</p>
             </div>
 
             <div 
@@ -662,7 +662,7 @@ const GuestCheckout = () => {
                     : ""
                 }`}
               ></p>
-              <p className="dark:text-gray-200">Western Union</p>
+              <p className="dark:text-gray-200">ويسترن يونيون</p>
               <img
                 className="h-5 mx-4"
                 src={assets.western_union}
@@ -674,13 +674,13 @@ const GuestCheckout = () => {
           {method === "manual" && formData.manualPaymentDetails.paymentType !== "western_union" && (
             <div className="mt-6 border dark:border-gray-600 p-4 rounded dark:bg-gray-700">
               <h3 className="text-lg font-medium mb-4 dark:text-gray-200">
-                Payment Details
+                تفاصيل الدفع
               </h3>
 
               {formData.manualPaymentDetails?.paymentType === "paypal" && (
                 <div>
                   <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                    PayPal Email
+                    بريد باي بال الإلكتروني
                   </label>
                   <input
                     type="email"
@@ -689,12 +689,12 @@ const GuestCheckout = () => {
                         ...prev,
                         manualPaymentDetails: {
                           ...prev.manualPaymentDetails,
-                          paypalEmail: e.target.value,
+                          paypalالبريد: e.target.value,
                         },
                       }))
                     }
                     className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                    placeholder="PayPal Email Address"
+                    placeholder="بريد باي بال الإلكتروني"
                   />
                 </div>
               )}
@@ -706,7 +706,7 @@ const GuestCheckout = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        Payment Type
+                        نوع الدفع
                       </label>
                       <select
                         required
@@ -721,14 +721,14 @@ const GuestCheckout = () => {
                         }
                         className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
                       >
-                        <option value="">Select Payment Type</option>
-                        <option value="credit_card">Credit Card</option>
-                        <option value="debit_card">Debit Card</option>
+                        <option value="">اختر طريقة الدفع</option>
+                        <option value="credit_card">بطاقة ائتمان</option>
+                        <option value="debit_card">بطاقة خصم</option>
                       </select>
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        Card Number
+                        رقم البطاقة
                       </label>
                       <input
                         type="text"
@@ -742,12 +742,12 @@ const GuestCheckout = () => {
                           }))
                         }
                         className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                        placeholder="Card Number"
+                        placeholder="رقم البطاقة"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        Card Holder Name
+                        اسم حامل البطاقة
                       </label>
                       <input
                         type="text"
@@ -761,13 +761,13 @@ const GuestCheckout = () => {
                           }))
                         }
                         className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                        placeholder="Card Holder Name"
+                        placeholder="اسم حامل البطاقة"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                          Expiry Date
+                          تاريخ الانتهاء
                         </label>
                         <input
                           type="text"
@@ -800,7 +800,7 @@ const GuestCheckout = () => {
                             }))
                           }
                           className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                          placeholder="CVV"
+                          placeholder="رمز التحقق"
                         />
                       </div>
                     </div>
@@ -811,14 +811,14 @@ const GuestCheckout = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                      Select Cryptocurrency
+                      اختر العملة الرقمية
                     </label>
                     <select
                       value={selectedCrypto}
                       onChange={(e) => handleCryptoChange(e.target.value)}
                       className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
                     >
-                      <option value="">Select a cryptocurrency</option>
+                      <option value="">اختر عملة رقمية</option>
                       {[...new Set(availableCryptos.map(wallet => wallet.cryptoType))].map(crypto => (
                         <option key={crypto} value={crypto}>
                           {crypto}
@@ -830,14 +830,14 @@ const GuestCheckout = () => {
                   {selectedCrypto && (
                     <div>
                       <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                        Select Network
+                        اختر الشبكة
                       </label>
                       <select
                         value={selectedNetwork}
                         onChange={(e) => handleNetworkChange(e.target.value)}
                         className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
                       >
-                        <option value="">Select a network</option>
+                        <option value="">اختر الشبكة</option>
                         {availableCryptos
                           .filter(wallet => wallet.cryptoType === selectedCrypto)
                           .map(wallet => (
@@ -853,7 +853,7 @@ const GuestCheckout = () => {
                   {selectedWallet && (
                   <div>
                     <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                      Send payment to this wallet address:
+                      أرسل الدفعة إلى عنوان المحفظة هذا:
                     </label>
                     <div className="flex items-center">
                       <input
@@ -867,7 +867,7 @@ const GuestCheckout = () => {
                           onClick={() => copyWalletAddress(selectedWallet.walletAddress)}
                         className="bg-gray-200 dark:bg-gray-600 px-4 py-2 ml-2 rounded"
                       >
-                        Copy
+                        نسخ
                       </button>
                     </div>
                       
@@ -880,14 +880,14 @@ const GuestCheckout = () => {
                       </div>
                       
                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                        After sending payment, you can optionally enter your transaction ID below
+                        بعد إرسال الدفعة، يمكنك إدخال رقم المعاملة أدناه (اختياري)
                     </p>
                   </div>
                   )}
                   
                   <div>
                     <label className="block text-sm font-medium mb-2 dark:text-gray-300">
-                      Your Transaction ID (Optional)
+                      رقم المعاملة (اختياري)
                     </label>
                     <input
                       type="text"
@@ -901,7 +901,7 @@ const GuestCheckout = () => {
                         }))
                       }
                       className="w-full border dark:border-gray-600 rounded py-2 px-3 dark:bg-gray-800 dark:text-white"
-                      placeholder="Enter transaction ID (optional)"
+                      placeholder="أدخل رقم المعاملة (اختياري)"
                     />
                   </div>
                 </div>
@@ -916,7 +916,7 @@ const GuestCheckout = () => {
               onClick={() => navigate('/login')}
               className="text-blue-600 dark:text-blue-400 hover:underline"
             >
-              Already have an account? Login instead
+              لديك حساب بالفعل؟ سجّل الدخول
             </button>
           </div>
 
@@ -926,7 +926,7 @@ const GuestCheckout = () => {
               disabled={isLoading}
               className="bg-black text-white dark:bg-[#02ADEE] dark:text-gray-800 px-16 py-3 text-sm hover:bg-gray-800 dark:hover:bg-yellow-500 disabled:opacity-70"
             >
-              {isLoading ? "PROCESSING..." : "PLACE ORDER"}
+              {isLoading ? "PROCESSING..." : "تأكيد الطلب"}
             </button>
           </div>
         </div>

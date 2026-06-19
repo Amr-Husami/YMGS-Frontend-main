@@ -33,11 +33,11 @@ const Hero = () => {
             style={{ animationDelay: "0.2s" }}
           >
             {/* Image slider container */}
-            <div className="relative h-[300px] w-full rounded-2xl overflow-hidden shadow-xl">
+            <div className="relative h-[200px] sm:h-[340px] lg:h-[460px] xl:h-[520px] w-full rounded-2xl overflow-hidden shadow-xl">
               {/* Static Image Backup */}
               <img
                 src={sliderImages[0]}
-                alt="صيدلية الشام"
+                alt="شفاء"
                 className="w-full h-full object-cover rounded-2xl"
                 width="800"
                 height="600"
@@ -55,7 +55,7 @@ const Hero = () => {
                   >
                     <img
                       src={image}
-                      alt={`صيدلية الشام ${index + 1}`}
+                      alt={`شفاء ${index + 1}`}
                       className="w-full h-full object-cover"
                       width="800"
                       height="600"

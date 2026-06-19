@@ -21,6 +21,7 @@ import Verify from './pages/Verify'
 import Policy from './pages/Policy'
 
 
+
 const App = () => {
   return(
     <div className='bg-white dark:bg-gray-800 transition-colors font-sans'>

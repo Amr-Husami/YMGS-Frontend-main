@@ -47,7 +47,7 @@ const RelatedProducts = ({category, subCategory, productId}) => {
     return (
     <div className='my-24 dark:bg-gray-800'>
       <div className='text-center text-3xl py-2'>
-        <Title text1={'RELATED'} text2={'PRODUCTS'} />
+        <Title text1={'منتجات'} text2={'ذات صلة'} />
       </div>
 
       {loading ? (

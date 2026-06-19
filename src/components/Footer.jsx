@@ -32,8 +32,9 @@ const Footer = () => {
     <div className="bg-[#7ccfff] dark:bg-gray-900 mt-10 py-8 px-6 shadow-inner">
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 mb-10 text-small">
         <div>
-          <Link to="/" className="font-display text-2xl text-primary dark:text-[#02ADEE]">
-            صيدلية الشام
+          <Link to="/" className="flex items-center gap-2 font-display text-2xl text-primary dark:text-[#02ADEE]">
+            <img src="/logo.svg" alt="شفاء" className="w-9 h-9" />
+            <span className="font-bold">شفاء</span>
           </Link>
           <p className="w-full md:w-2/3 text-gray-600 dark:text-gray-300 mt-2">
             شريكك الموثوق في الرعاية الصحية — أدوية وفيتامينات ومستلزمات طبية أصيلة
@@ -75,7 +76,7 @@ const Footer = () => {
       <div>
         <hr className="border-gray-300 dark:border-gray-700" />
         <p className="py-5 text-sm text-center text-gray-600 dark:text-gray-300">
-          صيدلية الشام © 2025 — جميع الحقوق محفوظة
+          شفاء © 2025 — جميع الحقوق محفوظة
         </p>
       </div>
     </div>

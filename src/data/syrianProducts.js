@@ -1,4 +1,4 @@
-// منتجات صيدلية الشام السورية — Syrian Pharmacy Products
+// منتجات شفاء السورية — Syrian Pharmacy Products
 export const syrianProducts = [
   {
     _id: 'sy-pharm-001',

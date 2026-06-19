@@ -44,7 +44,7 @@ const BlogDetail = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="flex justify-center items-center h-64">
             <Loader2 className="animate-spin mr-2" size={30} />
-            <span className="text-lg text-gray-700 dark:text-gray-300">Loading blog post...</span>
+            <span className="text-lg text-gray-700 dark:text-gray-300">جارٍ تحميل المقال...</span>
           </div>
         </div>
     );
@@ -54,11 +54,11 @@ const BlogDetail = () => {
     return (
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center py-10">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Blog Not Found</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">{error || 'The blog post you are looking for does not exist.'}</p>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">المقال غير موجود</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">{error || 'المقال الذي تبحث عنه غير موجود.'}</p>
             <Link to="/blogs" className="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
               <ArrowLeft size={18} className="mr-2" />
-              Back to All Blogs
+              العودة إلى كل المقالات
             </Link>
           </div>
         </div>
@@ -69,7 +69,7 @@ const BlogDetail = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link to="/blogs" className="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mb-8">
           <ArrowLeft size={18} className="mr-2" />
-          Back to All Blogs
+          العودة إلى كل المقالات
         </Link>
 
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
